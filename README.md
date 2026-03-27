@@ -3,7 +3,7 @@
 ### 📌 Visão Geral:
 
 Este projeto é uma ferramenta de automação para auditoria e testes de segurança em serviços SMB (Server Message Block), desenvolvida em Python utilizando a biblioteca Impacket.
-O objetivo do script é facilitar atividades de reconhecimento, enumeração de usuários, teste automatizado de credenciais, verificação de compartilhamentos (shares) e interação com sistemas Windows via SMB em ambientes controlados.
+O objetivo do script é facilitar atividades de reconhecimento, enumeração de usuários, teste automatizado de credenciais, verificação de compartilhamentos (shares) e interação com sistemas Windows via SMB em ambientes reais ou ctf
 
 ⚠️ <b>Aviso Legal:</b> Esta ferramenta deve ser utilizada exclusivamente em ambientes autorizados, laboratórios ou testes de segurança com permissão explícita. O uso indevido em sistemas sem autorização é ilegal e pode violar legislações locais e internacionais.
 
