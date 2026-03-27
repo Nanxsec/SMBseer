@@ -51,7 +51,7 @@ O script é estruturado em módulos independentes que interagem com sessões SMB
 - Teste de autenticação
 - Enumeração de usuários (quando possível)
 - Listagem de shares SMB
-- Execução de brute force baseado em wordlist
+- Abertura da shell
 
 ## ⚙️ Funcionalidades
 
