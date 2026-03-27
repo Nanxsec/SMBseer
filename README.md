@@ -36,6 +36,7 @@ O script é estruturado em módulos independentes que interagem com sessões SMB
     pip install impacket
     OU
     python3 -m pip install impacket --break-system-packages
+    python3 -m pip install -r requirements.txt --break-system-packages
 
 ### 🚀 Como usar:
     python3 smbscript.py
