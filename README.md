@@ -48,7 +48,7 @@ O script é estruturado em módulos independentes que interagem com sessões SMB
 
 ### Em seguida, o fluxo automático inicia:
 
-- Teste de autenticação com senha vazia
+- Teste de autenticação
 - Enumeração de usuários (quando possível)
 - Listagem de shares SMB
 - Execução de brute force baseado em wordlist
