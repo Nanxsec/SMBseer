@@ -52,5 +52,174 @@ O script é estruturado em módulos independentes que interagem com sessões SMB
 - Listagem de shares SMB
 - Execução de brute force baseado em wordlist
 
-### 🔍 Explicação das Funções:
+## ⚙️ Funcionalidades
+
+### 📦 format_size(size)
+Converte valores em bytes para um formato legível.
+
+**Exemplo:**
+
+    1024 → 1.0 KB
+    1048576 → 1.0 MB
+
+
+---
+
+### 🔧 normalize_smb_path(path, file)
+Normaliza caminhos SMB garantindo formatação correta com barras invertidas (`\`).
+
+**Função:**
+- Evita erros de concatenação de paths em operações SMB
+- Garante compatibilidade com compartilhamentos Windows
+
+---
+
+### 👤 enum_users(target, username, password)
+Realiza enumeração de usuários via protocolo **MS-SAMR (RPC)**.
+
+**Processo técnico:**
+- Conexão via SMBTransport
+- Abertura de sessão DCE/RPC
+- Enumeração de domínios disponíveis
+- Listagem de usuários do domínio
+
+**Observação:**
+Pode falhar dependendo de permissões e políticas de segurança do host remoto.
+
+---
+
+### 🧬 dump_sam(conn, username, password)
+Tenta realizar a extração remota das bases **SAM** e **SYSTEM**.
+
+**Dependências críticas:**
+- Privilégios administrativos no host remoto
+- Acesso ao registro via RPC/SMB
+
+**Processo:**
+- Habilita acesso remoto ao registry
+- Exporta hives SAM e SYSTEM
+- Processa hashes localmente via Impacket
+
+⚠️ **Importante:**
+A funcionalidade depende fortemente de permissões elevadas e pode não funcionar em todos os ambientes.
+
+---
+
+### 📂 listar_shares(conn, user)
+Lista compartilhamentos SMB disponíveis no host alvo e valida permissões.
+
+**Processo:**
+- Enumera shares via SMB
+- Testa leitura (`listPath`)
+- Testa escrita (`putFile` + `deleteFile`)
+
+**Classificação de permissões:**
+- READ/WRITE
+- READ
+- WRITE
+- NO ACCESS
+
+---
+
+### 🧭 smb_shell(conn, user)
+Interface interativa para exploração de compartilhamentos SMB.
+
+**Tipo de interface:**
+Pseudo-shell para navegação remota
+
+**Comandos disponíveis:**
+- `ls` → lista arquivos e diretórios
+- `cd` → navegação entre diretórios
+- `pwd` → exibe diretório atual
+- `download` → baixa arquivos
+- `upload` → envia arquivos
+- `exit / quit` → encerra sessão
+
+---
+
+### 🔐 try_login(user, password)
+Realiza tentativa de autenticação SMB.
+
+**Fluxo:**
+- Tentativa de login via SMBConnection
+- Em caso de sucesso:
+  - Exibe credencial válida
+  - Executa enumeração de usuários (quando possível)
+  - Tenta dump de SAM
+
+---
+
+### 🚪 detect_empty_password()
+Testa autenticação com senha vazia em usuários comuns.
+
+**Usuários testados:**
+- admin
+- administrator
+- guest
+- user
+
+**Comportamento:**
+Se autenticado com sucesso:
+- Lista shares disponíveis
+- Abre shell SMB automaticamente
+
+---
+
+### ⚙️ worker(user, password)
+Wrapper para execução paralela de login.
+
+**Função:**
+- Executado em threads
+- Encapsula `try_login`
+
+---
+
+### 🚀 main()
+Função principal da ferramenta.
+
+**Fluxo completo:**
+1. Teste de senha vazia
+2. Leitura da wordlist
+3. Construção de credenciais (`user:password`)
+4. Execução de brute force com múltiplas threads
+
+---
+
+## ⚡ Performance
+
+A ferramenta utiliza:
+
+- `ThreadPoolExecutor` para concorrência
+- Timeout em conexões SMB
+- Execução paralela de tentativas de login
+
+👉 Isso garante alta performance em ambientes de teste controlados.
+
+---
+
+## 🛡️ Segurança e Boas Práticas
+
+⚠️ Esta ferramenta deve ser usada **somente em ambientes autorizados**.
+
+- Não utilize contra sistemas sem permissão explícita
+- Voltada exclusivamente para aprendizado e auditoria de segurança
+- Pode gerar tráfego detectável por IDS/IPS
+
+---
+
+## 📌 Autor
+
+**Nanoxsec**  
+Instagram: [@eulucas.97](https://instagram.com)
+
+---
+
+## 🧪 Possíveis Melhorias Futuras
+
+- Exportação de resultados em JSON/YAML
+- Integração com proxies SOCKS
+- Detecção automática de vulnerabilidades SMB (CVEs)
+- Interface TUI (Terminal User Interface)
+- Logging estruturado (INFO, WARN, ERROR)
+- Módulo de relatórios pós-execução
 
