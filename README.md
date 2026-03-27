@@ -101,9 +101,6 @@ Tenta realizar a extração remota das bases **SAM** e **SYSTEM**.
 - Exporta hives SAM e SYSTEM
 - Processa hashes localmente via Impacket
 
-⚠️ **Importante:**
-A funcionalidade depende fortemente de permissões elevadas e pode não funcionar em todos os ambientes.
-
 ---
 
 ### 📂 listar_shares(conn, user)
