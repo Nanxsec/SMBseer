@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from impacket.dcerpc.v5 import samr, transport
 from impacket.examples.secretsdump import RemoteOperations, SAMHashes
 
+#limpar a tela
 os.system("clear")
 
 print("""\033[1;36m
@@ -26,7 +27,7 @@ WORDLIST = "wordlist.txt"
 lock = threading.Lock()
 empty_password_works = False
 
-
+#autocomplete
 def setup_autocomplete(commands):
     def completer(text, state):
         options = [cmd for cmd in commands if cmd.startswith(text)]
