@@ -4,7 +4,6 @@ import os
 import readline
 from impacket.smbconnection import SMBConnection
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
 from impacket.dcerpc.v5 import samr, transport
 from impacket.examples.secretsdump import RemoteOperations, SAMHashes
 
